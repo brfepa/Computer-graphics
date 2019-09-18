@@ -1,0 +1,20 @@
+format long;
+k=input('Entre com um valor real k para o cálculo do cosseno');
+k=abs(k);
+disp(' ');
+n=input('Entre com o grau do polinômio que vc quer =');
+while abs(n-floor(n))>0 || n<=0
+    disp('o numero de parcelas deve ser inteiro e positivo');
+    n=input('Entre com um inteiro e positivo de parcelas');
+end;
+s=1;
+for i=1:n
+        s=s+((-1)^(i+1))*(k^(2*i-1))/factorial(2*i-1);
+end
+
+disp('o valor do cosseno através do polinomio de taylor....');
+disp(s);
+disp('na maquina temos que cosseno é=');
+disp(sin(k));
+disp('a diferença resulta em=');
+disp(abs(s-sin(k)));
