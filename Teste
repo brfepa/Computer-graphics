@@ -1,0 +1,24 @@
+from OpenGL.GLUT import *
+from OpenGL.GLU import *
+from OpenGL.GL import *
+ 
+glBegin(GL_LINES);
+   sdfgglVertex2f(12.0f,12.0f);
+   glVertex2f(100.5f,100.5f);
+glEnd();
+
+ 
+# PROGRAMA PRINCIPAL
+glutInit(sys.argv)
+glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH | GLUT_MULTISAMPLE)
+glutInitWindowSize(800,600)
+glutCreateWindow("CUBO")
+glutDisplayFunc(abacaxi)
+glEnable(GL_MULTISAMPLE)
+glEnable(GL_DEPTH_TEST)
+glClearColor(0.,0.,0.,1.)
+gluPerspective(45,800.0/600.0,0.1,50.0)
+glTranslatef(0.0,0.0,-8)
+#glRotatef(45,1,1,1)
+glutTimerFunc(50,timer,1)
+glutMainLoop()
