@@ -1,0 +1,71 @@
+from OpenGL.GLUT import *
+from OpenGL.GLU import *
+from OpenGL.GL import *
+ 
+import math
+
+ 
+cor = ((0,1,1),(1,0,1),(1,1,0),(1,0,1),(0,1,1))
+altura,lado,r=6,18,6
+def piramide():
+	
+	face = []
+	vertice = [[0,altura,0]]
+	a = 2*math.pi/lado
+	
+	for i in range(1,lado):
+		if(i==lado):
+			face += [[0,i,1]]
+		else:
+			face += [[0,i+1,i]]
+
+	for i in range(0,lado):
+		x = r*math.cos(i*a)
+		y = 0
+		z = r*math.sin(i*a)
+		vertice += [[x,y,z]]
+
+	glBegin(GL_POLYGON)
+	glColor3fv(cor[1])
+	for w in range(1,1+lado):
+		glVertex3fv(vertice[w])
+	glEnd()
+		
+	k = 0
+	glBegin(GL_TRIANGLES)
+	for f in face:
+		glColor3fv(cor[k%len(cor)])
+		k += 1
+		for w in f:
+			glVertex3fv(vertice[w])
+	glEnd()
+
+	
+	
+ 
+def desenha():
+
+    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
+    #glTranslatef(0,0,0)
+    glRotatef(2,1,1,1);
+    piramide()
+    glutSwapBuffers()
+    
+def timer(i):
+    glutPostRedisplay()
+    glutTimerFunc(50,timer,1)
+ 
+# PROGRAMA PRINCIPAL
+glutInit(sys.argv)
+glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH | GLUT_MULTISAMPLE)
+glutInitWindowSize(800,600)
+glutCreateWindow("Piramide")
+glutDisplayFunc(desenha)
+glEnable(GL_MULTISAMPLE)
+glEnable(GL_DEPTH_TEST)
+glClearColor(0.,0.,0.,1.)
+gluPerspective(45,800.0/600.0,0.1,50.0)
+glTranslatef(0.0,0.0,-16)
+#glRotatef(45,1,1,1)
+glutTimerFunc(50,timer,1)
+glutMainLoop()
