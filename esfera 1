@@ -1,0 +1,51 @@
+from OpenGL.GLUT import *
+from OpenGL.GLU import *
+from OpenGL.GL import *
+ 
+import math
+
+a,b,raio=75,75,5   
+
+	
+ 
+def esfera():
+	vertices = []
+	glColor3fv((0,0.5,0))
+	glBegin(GL_POINTS)
+	for i in range(0,b):
+		theta= i*(math.pi/(b-1)) - math.pi/2 
+		for j in range(0,a):
+			phi= (2*math.pi*j)/(a-1)
+
+			x = raio*math.cos(theta)*math.cos(phi)
+			y = raio*math.sin(theta)
+			z = raio*math.cos(theta)*math.sin(phi)
+			
+			glVertex3fv([x,y,z])
+	glEnd()
+  
+def desenha():
+    global a
+    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
+    glRotatef(2,0,1,0);
+    esfera()
+    glutSwapBuffers()
+    
+def timer(i):
+    glutPostRedisplay()
+    glutTimerFunc(50,timer,1)
+ 
+# PROGRAMA PRINCIPAL
+glutInit(sys.argv)
+glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH | GLUT_MULTISAMPLE)
+glutInitWindowSize(800,600)
+glutCreateWindow("Esfera Pontilhada")
+glutDisplayFunc(desenha)
+glEnable(GL_MULTISAMPLE)
+glEnable(GL_DEPTH_TEST)
+glClearColor(0.,0.,0.,1.)
+gluPerspective(45,800.0/600.0,0.1,50.0)
+glTranslatef(0.0,0.0,-12)
+#glRotatef(45,1,1,1)
+glutTimerFunc(50,timer,1)
+glutMainLoop()
