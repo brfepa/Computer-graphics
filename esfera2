@@ -1,0 +1,84 @@
+from OpenGL.GLUT import *
+from OpenGL.GLU import *
+from OpenGL.GL import *
+ 
+import math
+
+x,y,raio=15,15,6
+
+	
+ 
+def esfera():
+	
+	glBegin(GL_TRIANGLES)
+	for i in range(0,x):
+		phi= (2*math.pi*i)/(y-1)
+		for j in range(0,y):
+			theta= j*(math.pi/(x-1)) - math.pi/2 
+			
+			a = raio*math.cos(theta)*math.cos(phi+2*math.pi/(y-1))
+			b = raio*math.sin(theta)
+			c = raio*math.cos(theta)*math.sin(phi+2*math.pi/(y-1))
+			glColor3f(1,1,0)
+			glVertex3fv([a,b,c])
+
+			d = raio*math.cos(theta+math.pi/(x-1))*math.cos(phi+2*math.pi/(y-1))
+			e = raio*math.sin(theta+math.pi/(x-1))
+			f = raio*math.cos(theta+math.pi/(x-1))*math.sin(phi+2*math.pi/(y-1))
+			
+			glVertex3fv([d,e,f])
+			
+			g = raio*math.cos(theta+math.pi/(x-1))*math.cos(phi)
+			h = raio*math.sin(theta+math.pi/(x-1))
+			i = raio*math.cos(theta+math.pi/(x-1))*math.sin(phi)
+			glColor3f(1,0,1)
+			glVertex3fv([g,h,i])
+
+			t = raio*math.cos(theta+math.pi/(x-1))*math.cos(phi)
+			o = raio*math.sin(theta+math.pi/(x-1))
+			p = raio*math.cos(theta+math.pi/(x-1))*math.sin(phi)
+			glColor3f(1,1,1)
+			glVertex3fv([t,o,p])
+			
+			j = raio*math.cos(theta)*math.cos(phi+2*math.pi/(y-1))
+			l = raio*math.sin(theta)
+			u = raio*math.cos(theta)*math.sin(phi+2*math.pi/(y-1))
+			glColor3f(1,1,1)
+			glVertex3fv([j,l,u])
+
+			m = raio*math.cos(theta)*math.cos(phi)
+			n = raio*math.sin(theta)
+			q = raio*math.cos(theta)*math.sin(phi)
+			glColor3f(1,1,1)
+			glVertex3fv([m,n,q])
+
+		
+	glEnd()
+	
+
+       
+def desenha():
+    global a
+    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
+    glRotatef(2,0,1,1);
+    esfera()
+    glutSwapBuffers()
+    return;
+def timer(i):
+    glutPostRedisplay()
+    glutTimerFunc(50,timer,1)
+ 
+# PROGRAMA PRINCIPAL
+glutInit(sys.argv)
+glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH | GLUT_MULTISAMPLE)
+glutInitWindowSize(800,600)
+glutCreateWindow("Esfera Junina")
+glutDisplayFunc(desenha)
+glEnable(GL_MULTISAMPLE)
+glEnable(GL_DEPTH_TEST)
+glClearColor(0.,0.,0.,1.)
+gluPerspective(45,800.0/600.0,0.1,50.0)
+glTranslatef(0.0,0.0,-16)
+#glRotatef(45,1,1,1)
+glutTimerFunc(50,timer,1)
+glutMainLoop()
