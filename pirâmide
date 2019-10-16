@@ -27,7 +27,7 @@ faces = (
  
 cores = ((0,1,0),(1,1,1),(0,1,1),(0,1,1),(1,0,0),(1,0,0))
  
-def piramideFixo():
+def piramide():
     glBegin(GL_TRIANGLES)
     i = 0
     for face in faces:
@@ -52,7 +52,7 @@ def desenha():
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
     glTranslatef(0,0,0)
     glRotatef(3,1,0,1);
-    piramideFixo()
+    piramide()
     glutSwapBuffers()
     
 def timer(i):
@@ -63,7 +63,7 @@ def timer(i):
 glutInit(sys.argv)
 glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH | GLUT_MULTISAMPLE)
 glutInitWindowSize(800,600)
-glutCreateWindow("PiramideFixo")
+glutCreateWindow("Piramide")
 glutDisplayFunc(desenha)
 glEnable(GL_MULTISAMPLE)
 glEnable(GL_DEPTH_TEST)
